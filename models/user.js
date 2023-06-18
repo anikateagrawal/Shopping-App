@@ -14,7 +14,8 @@ const schema=new mongoose.Schema({
         ref:'products'
     }],
     qty:[{type:Number}],
-    profile:String
+    profile:String,
+    isAdmin:Boolean
 })
 
 schema.plugin(passportLocalMongoose);

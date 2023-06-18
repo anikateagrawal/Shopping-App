@@ -21,7 +21,7 @@ const User=require('./models/user')
 const userRoutes=require('./routes/userRoutes');
 const MongoDBStore = require('express-mongodb-session')(session);
 
-const dburl='mongodb://127.0.0.1:27017/shopping-app';
+const dburl=process.env.dbURL||'mongodb://127.0.0.1:27017/shopping-app';
 
 
  
@@ -88,7 +88,7 @@ mongoose.set('strictQuery',true);
 mongoose.connect(dburl)
 .then(()=>{
     console.log('DB connected');
-    // seed()
+    // seed();
 }).catch((e)=>console.log(e)); 
 
 // setInterval(seed,24*60*60*1000);

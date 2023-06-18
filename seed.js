@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const Product = require('./models/product');
+const User=require('./models/user');
+
+
+
 
 const products = [
     {
@@ -50,6 +54,9 @@ const products = [
 async function seedDB(){
     await Product.deleteMany();
     await Product.insertMany(products);
+    await User.deleteMany({});
+    const admin=new User({username:'admin',email:'admin@gmail.com',contact:999999999,isAdmin:true});
+    await User.register(admin,'12345');
     console.log("DB seeded");
 }
 
