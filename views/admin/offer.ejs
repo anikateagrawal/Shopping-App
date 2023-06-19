@@ -1,0 +1,25 @@
+<% layout('./layout/boilerplate')%>
+<form action="/offer/new" method="post">
+    <h1>Add Offer</h1>
+    <div class="mb-3">
+        <label for="desc" class="form-label">Description</label><br>
+        <textarea name="desc" id="desc" class="form-control" rows="2"></textarea>
+      </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Discount Percent</label>
+      <input type="number" class="form-control" id="price" name="percent" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<hr>
+<div class="card p-5">
+    <h1>Present Offers</h1>
+    <% for(let offer of offers){%>
+        <div class="card p-1">
+            <h6><%=offer.desc%></h6>
+            <p><%=offer.percent%>%</p>
+            <form action="/offer/<%=offer.id%>?_method=delete" method="post"><button class="btn btn-danger">Delete</button></form>
+        </div>
+    <%}%>
+</div>

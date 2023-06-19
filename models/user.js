@@ -15,7 +15,11 @@ const schema=new mongoose.Schema({
     }],
     qty:[{type:Number}],
     profile:String,
-    isAdmin:Boolean
+    isAdmin:Boolean,
+    reward:{
+        type:Number,
+        default:0
+    }
 })
 
 schema.plugin(passportLocalMongoose);

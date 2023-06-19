@@ -26,5 +26,30 @@
     <h5>Quantity: <%=qty[i]%> Total: <%= products[i].price*qty[i]%></h5>
     <%total+=products[i].price*qty[i]%>
     <%}%>
+    <br>
+    <div class="off">
+    <label for="offer">Select offer</label>
+    <select name="offer" id="offer">
+      <option value="0" selected disabled>Select offer</option>
+      <%for(let offer of offers){%>
+        <option value="<%=offer.percent%>"><%=offer.desc%> <%=offer.percent%>%</option>
+      <%}%>
+    </select>
+  </div>
+  <br>
+  <div class="points">
+    <input type="checkbox" name="reward" id="reward"><label for="reward">Use rewards points</label>
+    <p>Available:<%=user.reward%></p>
+  </div>
+  <br>
+  
+
+  <div class="dis">
+    <label for="discount">Discount = </label>
+    <input type="Number" id="discount" value="0" disabled>
+  </div>
 <h1>Grand Total= Rs. <%=total %></h1>
-<button class="btn btn-success">Place Order</button>
+<form action="/order/<%=total%>" method="post"><button class="btn btn-success">Place Order</button></form>
+<script>
+    
+</script>

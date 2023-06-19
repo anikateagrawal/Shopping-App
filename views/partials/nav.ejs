@@ -9,6 +9,11 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/products">Home</a>
           </li>
+          <% if(user && user.isAdmin){ %>
+            <li class="nav-item">
+              <a class="nav-link" href="/offers">Offers</a>
+            </li>
+          <%}%>
           <% if(user && user.profile=="retailer"){%>
           <li class="nav-item">
             <a class="nav-link" href="/myproducts">My Products</a>

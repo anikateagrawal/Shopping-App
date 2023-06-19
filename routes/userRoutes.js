@@ -3,6 +3,7 @@ const router=express.Router();
 const {isLoggedIn}=require('../middleware');
 const User=require('../models/user')
 const Product=require('../models/product') 
+const Offers=require('../models/offers');
 
 router.get('/user',isLoggedIn,(req,res)=>{
     res.render('user/userInfo');
@@ -32,7 +33,8 @@ router.get('/cart',isLoggedIn,async(req,res)=>{
     const user=req.user;
     await user.populate('cart');
     const products=user.cart;
-    res.render('user/cart',{products});
+    const offers=await Offers.find();
+    res.render('user/cart',{products,offers});
 })  
 
 router.delete('/products/cart/:pid',isLoggedIn,async(req,res)=>{

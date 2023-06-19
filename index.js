@@ -19,10 +19,12 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 const User=require('./models/user')
 const userRoutes=require('./routes/userRoutes');
+const adminRoutes=require('./routes/adminRoutes');
+const orderRoutes=require('./routes/orderRoutes');
 const MongoDBStore = require('express-mongodb-session')(session);
 
 const dburl=process.env.dbURL||'mongodb://127.0.0.1:27017/shopping-app';
-
+const dburl2='mongodb://127.0.0.1:27017/shopping-app';
 
  
 passport.use(new LocalStrategy(User.authenticate()));
@@ -81,7 +83,8 @@ app.use(reviewRouter);
 app.use(productRoutes);
 app.use(authRoutes);
 app.use(userRoutes);
-
+app.use(adminRoutes);
+app.use(orderRoutes);
 mongoose.set('strictQuery',true);
 
 
