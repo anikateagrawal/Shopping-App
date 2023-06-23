@@ -27,29 +27,75 @@
     <%total+=products[i].price*qty[i]%>
     <%}%>
     <br>
-    <div class="off">
-    <label for="offer">Select offer</label>
-    <select name="offer" id="offer">
-      <option value="0" selected disabled>Select offer</option>
-      <%for(let offer of offers){%>
-        <option value="<%=offer.percent%>"><%=offer.desc%> <%=offer.percent%>%</option>
-      <%}%>
-    </select>
-  </div>
-  <br>
-  <div class="points">
-    <input type="checkbox" name="reward" id="reward"><label for="reward">Use rewards points</label>
-    <p>Available:<%=user.reward%></p>
-  </div>
+    
   <br>
   
-
-  <div class="dis">
-    <label for="discount">Discount = </label>
-    <input type="Number" id="discount" value="0" disabled>
-  </div>
-<h1>Grand Total= Rs. <%=total %></h1>
-<form action="/order/<%=total%>" method="post"><button class="btn btn-success">Place Order</button></form>
+  <br>
+  
+  <form action="/order" method="post">
+    <div class="total">
+      <label for="total">Total</label>
+      <input type="Number" name="total" id="total"  value="<%=total %>"  readonly>
+    </div>
+    <div class="points">
+      <label for="available">Available Reward points = </label>
+      <input type="Number" name="available" id="available"  value="<%=user.reward%>" readonly><br>
+      <input type="checkbox" name="reward" id="reward"><label for="reward">Use rewards points</label>
+      <br>
+      <label for="points">Reward points Discount = </label>
+      <input type="Number" id="points" value="0" readonly>
+    </div>
+    <div class="dis">
+      <div class="off">
+        <label for="offer">Select offer</label>
+        <select name="offer" id="offer">
+          <option value="0" selected >None</option>
+          <%for(let offer of offers){%>
+            <option value="<%=offer.percent%>"><%=offer.desc%> <%=offer.percent%>%</option>
+          <%}%>
+        </select>
+      </div>
+      <label for="discount">Offer Discount = </label>
+      <input type="Number" id="discount" value="0" readonly>
+    </div>
+    <div class="amount">
+      <label for="amount">Grand Total= Rs. </label>
+      <input type="Number" name="amount" value="<%=total %>" readonly id="amount" >
+    </div>
+    <button class="btn btn-success">Place Order</button>
+  </form>
 <script>
-    
+    document.getElementById('reward').addEventListener('change',updateReward);
+    document.getElementById('offer').addEventListener('change',updateDiscount);
+
+    function updateReward(){
+      const available=document.getElementById('available');
+      const points=document.getElementById('points');
+      const reward=document.getElementById('reward');
+      if(reward.checked){
+          points.value=available.value;
+          available.value=0;
+      }
+      else{
+        available.value=points.value;
+        points.value=0;
+      }
+      updateAmount();
+    }
+
+    function updateDiscount(){
+      const discount=document.getElementById('discount');
+      const offer=document.getElementById('offer');
+      const total=document.getElementById('total');
+      discount.value=total.value*offer.value/100;
+      updateAmount();
+    }
+
+    function updateAmount(){
+      const total=document.getElementById('total');
+      const points=document.getElementById('points');
+      const discount=document.getElementById('discount');
+      const amount=document.getElementById('amount');
+      amount.value=total.value-points.value-discount.value;
+    }
 </script>

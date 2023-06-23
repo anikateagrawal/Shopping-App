@@ -3,10 +3,11 @@ const { isLoggedIn } = require('../middleware');
 const user = require('../models/user');
 const router=express.Router();
 
-router.post('/order/:total',isLoggedIn,async(req,res)=>{
+router.post('/order',isLoggedIn,async(req,res)=>{
     const User=await user.findById(req.user.id);
-    const {total}=req.params;
-    User.reward+=total/100;
+    const {amount,available}=req.body;
+    // console.log(req.body);
+    User.reward=+available+amount/100;
     User.cart=[];
     User.qty=[];
     await User.save();
